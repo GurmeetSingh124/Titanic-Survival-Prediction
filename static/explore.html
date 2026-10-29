@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore survival patterns and data quality in the Titanic passenger dataset.">
+  <title>Explore the data · Titanic Passenger Outcome Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css"><link rel="stylesheet" href="/static/pages.css">
+</head>
+<body class="detail-page">
+  <header class="topbar"><a class="brand" href="/predict" aria-label="Titanic Passenger Outcome Lab home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 4v31M18 12h12M15 21h18M9 29c5 5 10 5 15 0 5 5 10 5 15 0M24 35v7M17 42h14"/><path d="M19 4h10"/></svg></span><span><b>TITANIC</b><small>PASSENGER OUTCOME LAB</small></span></a><nav><a href="/predict">Predict</a><a class="active" href="/explore">Explore data</a><a href="/about">About</a></nav><span class="dataset-pill"><i></i> 891 PASSENGERS</span></header>
+  <main>
+    <section class="subhero explore-hero"><div class="subhero-shade"></div><div class="subhero-content"><p class="eyebrow"><span></span> THE PASSENGER MANIFEST</p><h1>Explore the<br><em>data behind the story.</em></h1><p>Change the view, compare passenger groups, and inspect where information is missing.</p><div class="hero-chips"><span>891 records</span><span>16 CSV columns</span><span>Historical dataset</span></div></div></section>
+    <section class="explore-content">
+      <div class="explore-heading-row"><div><p class="eyebrow"><span></span> INTERACTIVE DATA EXPLORER</p><h2>See the patterns for yourself.</h2><p class="section-lede">Choose a passenger grouping and a measure. Charts and table update using the included CSV.</p></div><a href="/predict" class="outline-link">Try a passenger profile <span>→</span></a></div>
+      <div class="kpi-row">
+        <article class="kpi-card"><span class="kpi-label">PASSENGER RECORDS</span><strong id="explore-total">—</strong><span class="kpi-caption">rows in the dataset</span></article>
+        <article class="kpi-card kpi-green"><span class="kpi-label">SURVIVED</span><strong id="explore-survived">—</strong><span class="kpi-caption" id="explore-survival-copy">of all passengers</span></article>
+        <article class="kpi-card kpi-coral"><span class="kpi-label">DID NOT SURVIVE</span><strong id="explore-not-survived">—</strong><span class="kpi-caption">historical records</span></article>
+        <article class="kpi-card kpi-blue"><span class="kpi-label">AGE NOT RECORDED</span><strong id="explore-missing">—</strong><span class="kpi-caption">records need imputation</span></article>
+      </div>
+
+      <section class="analysis-card">
+        <div class="analysis-top"><div><span class="panel-kicker">COMPARE PASSENGER GROUPS</span><h2 id="chart-title">Survival rate by ticket class</h2><p id="chart-description">Share of passengers in each class who survived.</p></div><span class="chart-tag"><i></i> LIVE FROM CSV</span></div>
+        <div class="chart-controls"><label>Group by<select id="dimension"><option value="class">Ticket class</option><option value="sex">Sex</option><option value="age">Age group</option><option value="embarked">Embarkation town</option><option value="family">Family size</option></select></label><label>Show<select id="measure"><option value="rate">Survival rate (%)</option><option value="passengers">Passenger count</option><option value="survived">Survived count</option><option value="not_survived">Did not survive count</option></select></label><p class="chart-insight" id="chart-insight" aria-live="polite"></p></div>
+        <div class="visualization"><div class="axis-labels" id="axis-labels"></div><div class="plot-area" id="explore-chart" role="img" aria-label="Interactive chart of passenger groups"><p class="loading-state">Loading passenger records…</p></div></div>
+        <div class="chart-footnote"><span>ⓘ</span> Survival rate is the share of passengers in a group marked as survived in this dataset. It describes historical records and does not imply causation.</div>
+      </section>
+
+      <section class="data-table-section">
+        <div class="table-heading"><div><p class="eyebrow"><span></span> GROUP SUMMARY</p><h2 id="table-title">Passenger counts by ticket class</h2></div><span class="table-hint">Select a different group above to update this table</span></div>
+        <div class="table-wrap"><table><thead><tr><th>Passenger group</th><th>Passengers</th><th>Survived</th><th>Did not survive</th><th>Survival rate</th></tr></thead><tbody id="group-table"><tr><td colspan="5">Loading…</td></tr></tbody></table></div>
+      </section>
+
+      <section class="missing-section"><div class="missing-intro"><p class="eyebrow"><span></span> DATA QUALITY</p><h2>What’s missing?</h2><p>Missing values matter because a model needs a strategy for incomplete passenger records. Age is the main field with gaps in this file.</p><div class="missing-callout"><strong id="age-missing-share">—</strong><span>of passenger ages are blank and are median-imputed before model training.</span></div></div><div class="missing-card"><div class="missing-head"><span>FIELD</span><span>MISSING</span><span>COMPLETENESS</span></div><div id="missing-bars"><p class="loading-state">Loading missing-value summary…</p></div></div></section>
+
+      <section class="dictionary-section"><div class="table-heading"><div><p class="eyebrow"><span></span> FIELD GUIDE</p><h2>What each column means.</h2><p class="section-lede">The raw file includes useful fields and a few duplicate/derived columns. The model only uses its six selected inputs.</p></div><label class="search-label">Filter fields<input id="field-search" type="search" placeholder="Search age, fare, class…"></label></div><div class="dictionary-grid" id="dictionary-grid">
+        <article class="dictionary-item" data-search="survived target outcome label"><span class="field-type target-type">TARGET</span><h3>survived</h3><p>Outcome label: 1 means survived, 0 means did not survive.</p></article>
+        <article class="dictionary-item model-field" data-search="pclass passenger class ticket"><span class="field-type used-type">MODEL INPUT</span><h3>pclass</h3><p>Ticket class: 1st, 2nd, or 3rd. A rough indicator of fare class.</p></article>
+        <article class="dictionary-item model-field" data-search="sex male female"><span class="field-type used-type">MODEL INPUT</span><h3>sex</h3><p>Recorded passenger sex category: male or female.</p></article>
+        <article class="dictionary-item model-field" data-search="age years missing"><span class="field-type used-type">MODEL INPUT</span><h3>age</h3><p>Passenger age in years. Some records have no age recorded.</p></article>
+        <article class="dictionary-item model-field" data-search="sibsp siblings spouse family"><span class="field-type derived-type">DERIVED INPUT</span><h3>sibsp + parch</h3><p>Combined to make family size: siblings/spouses plus parents/children, including the passenger.</p></article>
+        <article class="dictionary-item model-field" data-search="fare ticket price pounds"><span class="field-type used-type">MODEL INPUT</span><h3>fare</h3><p>Ticket fare recorded for the passenger.</p></article>
+        <article class="dictionary-item model-field" data-search="embarked port town southampton cherbourg queenstown"><span class="field-type used-type">MODEL INPUT</span><h3>embarked</h3><p>Boarding port: S Southampton, C Cherbourg, or Q Queenstown.</p></article>
+        <article class="dictionary-item" data-search="alive yes no leakage duplicate target"><span class="field-type exclude-type">EXCLUDED</span><h3>alive</h3><p>Text duplicate of the target outcome. Excluded to prevent target leakage.</p></article>
+        <article class="dictionary-item" data-search="class first second third duplicate pclass"><span class="field-type exclude-type">EXCLUDED</span><h3>class</h3><p>Text form of pclass. Excluded from the model because pclass already carries the same information.</p></article>
+        <article class="dictionary-item" data-search="deck cabin missing"><span class="field-type exclude-type">NOT USED</span><h3>deck</h3><p>Cabin deck, missing for most passengers in this file.</p></article>
+        <article class="dictionary-item" data-search="who adult male alone family"><span class="field-type exclude-type">NOT USED</span><h3>who · adult_male · alone</h3><p>Convenience/derived fields. They overlap information already represented by other inputs.</p></article>
+        <article class="dictionary-item" data-search="passengerid index row identifier"><span class="field-type exclude-type">NOT USED</span><h3>Unnamed column</h3><p>A row index included in the CSV, not a passenger characteristic.</p></article>
+      </div><p id="no-fields" class="empty-state" hidden>No fields match that search.</p></section>
+    </section>
+  </main>
+  <footer><a class="footer-brand" href="/predict">TITANIC <span>PASSENGER OUTCOME LAB</span></a><span>Historical records. Estimates are not guarantees.</span><a href="#top">Back to top ↑</a></footer>
+  <script src="/static/explore.js"></script>
+</body>
+</html>
