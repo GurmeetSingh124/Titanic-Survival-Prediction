@@ -1,0 +1,12 @@
+INFO:     127.0.0.1:63518 - "GET /predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59241 - "GET /static/styles.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59933 - "GET /static/pages.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55885 - "GET /static/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55885 - "GET /static/images/titanic-dawn.png HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59241 - "POST /api/predict HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59241 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55885 - "GET /api/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55885 - "GET /explore HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55885 - "GET /static/explore.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55885 - "GET /api/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55885 - "GET /about HTTP/1.1" 200 OK
