@@ -31,9 +31,8 @@ DATA = load_data()
 FEATURES = ["pclass", "sex", "age", "family_size", "fare", "embarked"]
 if not MODEL_PATH.exists():
     raise FileNotFoundError(
-        f"Saved model not found: {MODEL_PATH}. In VS Code, open Titanic_Basics_Hinglish.ipynb, "
-        "select the project Python environment, run all cells from top to bottom, then restart the website. "
-        "Titanic_Survival_Analysis.ipynb is the detailed alternative."
+        f"Saved model not found: {MODEL_PATH}. In VS Code, open Titanic_Survival_Analysis.ipynb, "
+        "select the project Python environment, run all cells from top to bottom, then restart the website."
     )
 
 model = joblib.load(MODEL_PATH)
@@ -41,7 +40,7 @@ saved_features = list(getattr(model, "feature_names_in_", []))
 if saved_features != FEATURES:
     raise ValueError(
         "The saved model's input columns do not match the website form. "
-        f"Expected {FEATURES}, found {saved_features}. Re-run Titanic_Basics_Hinglish.ipynb from top to bottom."
+        f"Expected {FEATURES}, found {saved_features}. Re-run Titanic_Survival_Analysis.ipynb from top to bottom."
     )
 
 app = FastAPI(title="Titanic Passenger Outcome Lab", version="1.0.0")
