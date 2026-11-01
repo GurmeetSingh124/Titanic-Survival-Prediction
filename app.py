@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 import joblib
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -31,8 +31,9 @@ DATA = load_data()
 FEATURES = ["pclass", "sex", "age", "family_size", "fare", "embarked"]
 if not MODEL_PATH.exists():
     raise FileNotFoundError(
-        f"Saved model not found: {MODEL_PATH}. Open Titanic_Survival_Analysis.ipynb "
-        "in VS Code, run its final model-training and save cells, then restart the website."
+        f"Saved model not found: {MODEL_PATH}. In VS Code, open Titanic_Basics_Hinglish.ipynb, "
+        "select the project Python environment, run all cells from top to bottom, then restart the website. "
+        "Titanic_Survival_Analysis.ipynb is the detailed alternative."
     )
 
 model = joblib.load(MODEL_PATH)
@@ -40,7 +41,7 @@ saved_features = list(getattr(model, "feature_names_in_", []))
 if saved_features != FEATURES:
     raise ValueError(
         "The saved model's input columns do not match the website form. "
-        f"Expected {FEATURES}, found {saved_features}. Re-run the notebook's final model cells."
+        f"Expected {FEATURES}, found {saved_features}. Re-run Titanic_Basics_Hinglish.ipynb from top to bottom."
     )
 
 app = FastAPI(title="Titanic Passenger Outcome Lab", version="1.0.0")
@@ -68,12 +69,12 @@ def predict_page():
 
 @app.get("/explore")
 def explore_page():
-    return FileResponse(STATIC_PATH / "explore.html")
+    return RedirectResponse(url="/#data", status_code=303)
 
 
 @app.get("/about")
 def about_page():
-    return FileResponse(STATIC_PATH / "about.html")
+    return RedirectResponse(url="/#about", status_code=303)
 
 
 @app.get("/api/stats")

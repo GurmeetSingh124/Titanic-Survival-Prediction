@@ -1,81 +1,159 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#faf8f1">
-  <meta name="description" content="Explore the Titanic passenger dataset and try a machine learning survival prediction.">
-  <title>Titanic Passenger Outcome Lab</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/styles.css">
-  <link rel="stylesheet" href="/static/pages.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Titanic Survival Prediction · Passenger Outcome Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/manifest.css">
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="#top" aria-label="Titanic Passenger Outcome Lab home">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 4v31M18 12h12M15 21h18M9 29c5 5 10 5 15 0 5 5 10 5 15 0M24 35v7M17 42h14"/><path d="M19 4h10"/></svg></span>
-      <span><b>TITANIC</b><small>PASSENGER OUTCOME LAB</small></span>
-    </a>
-    <nav><a class="active" href="/predict">Predict</a><a href="/explore">Explore data</a><a href="/about">About</a></nav>
-    <span class="dataset-pill"><i></i> HISTORICAL DATA</span>
-  </header>
 
-  <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="eyebrow"><span></span> A MACHINE LEARNING STORY</p>
-        <h1 id="hero-title">Every passenger<br>had a <em>story.</em></h1>
-        <p class="hero-sub">Use historical passenger data to explore the factors that influenced survival on the Titanic, and see how your inputs compare.</p>
-        <a class="text-link" href="#predict">Try the predictor <span>↘</span></a>
-      </div>
-      <div class="ship-scene" role="img" aria-label="A historic ocean liner crossing the Atlantic at dawn"></div>
-    </section>
+<div class="bg" aria-hidden="true"><video class="bg-video" autoplay muted loop playsinline preload="metadata" poster="/static/images/titanic-dawn.png" tabindex="-1"><source src="/static/videos/titanic-loop.mp4" type="video/mp4"></video></div>
 
-    <section class="predict-grid" id="predict">
-      <form class="card form-card" id="predict-form">
-        <div class="section-heading"><span class="heading-icon">✳</span><div><h2>Passenger profile</h2><p>Enter a passenger's details to estimate their likelihood of survival.</p></div></div>
-        <div class="form-fields">
-          <label>Ticket class <span class="hint" title="1st class was the highest fare class">i</span><select name="pclass"><option value="1">1st class</option><option value="2">2nd class</option><option value="3">3rd class</option></select></label>
-          <fieldset><legend>Sex <span class="hint" title="Recorded passenger sex in the dataset">i</span></legend><div class="segmented"><label><input type="radio" name="sex" value="male"><span>Male</span></label><label><input type="radio" name="sex" value="female" checked><span>Female</span></label></div></fieldset>
-          <label>Age <span class="hint" title="Age in years">i</span><input type="number" name="age" min="0" max="100" value="28" required></label>
-          <label>Family group size <span class="hint" title="Count everyone in the family group, including this passenger">i</span><input type="number" name="family_size" min="1" max="20" value="2" required></label>
-          <label>Ticket fare <span class="hint" title="Fare recorded in the dataset">i</span><div class="input-prefix"><span>£</span><input type="number" name="fare" min="0" max="600" step="0.01" value="72" required></div></label>
-          <label>Embarkation town<select name="embarked"><option value="S">Southampton</option><option value="C">Cherbourg</option><option value="Q">Queenstown</option></select></label>
-        </div>
-        <button class="predict-button" type="submit"><span class="button-icon">▥</span><span class="button-label">Run prediction</span><span class="arrow">→</span></button>
-        <p class="form-message" id="form-message" aria-live="polite"></p>
-      </form>
+<header><a class="logo glass" href="#hero" aria-label="Titanic Survival Prediction home">TITANIC · 1912</a><nav><a href="#onboard">Passengers</a><a href="#voyage">Story</a><a href="#factors">Model inputs</a><a href="#data">Data analysis</a><a href="#about">Project</a></nav><a class="pill" href="#predict">Try prediction</a></header>
 
-      <section class="card result-card" id="result-card" aria-labelledby="result-title">
-        <div class="result-heading"><span class="heading-icon anchor-icon">⚓</span><div><h2 id="result-title">Survival likelihood</h2><p id="result-subtitle">Model estimate based on the passenger details.</p></div><span class="live-tag"><i></i> MODEL</span></div>
-        <div class="result-main">
-          <div class="gauge" id="gauge" style="--score:64"><div class="gauge-inner"><strong id="score">64%</strong><span>likelihood</span></div></div>
-          <div class="result-copy"><p class="result-kicker">PREDICTED OUTCOME</p><h3 id="outcome">Higher likelihood</h3><p id="result-note">The model sees a higher estimated chance of survival for this passenger profile.</p></div>
-        </div>
-        <div class="result-divider"></div>
-        <div class="model-note"><span class="note-icon">i</span><p><b>A note on this estimate</b><br>This is a machine learning estimate from historical records, not a guarantee or a measure of a person's worth.</p></div>
-      </section>
-    </section>
+<nav class="idx" aria-label="Sections"><a href="#hero" data-n="1"><span>HOME</span>01</a><a href="#onboard" data-n="2"><span>PASSENGERS</span>02</a><a href="#voyage" data-n="3"><span>STORY</span>03</a><a href="#factors" data-n="4"><span>MODEL</span>04</a><a href="#predict" data-n="5"><span>PREDICT</span>05</a><a href="#data" data-n="6"><span>DATA</span>06</a><a href="#about" data-n="7"><span>PROJECT</span>07</a></nav>
 
-    <section class="explore-section" id="explore">
-      <div class="explore-intro"><p class="eyebrow"><span></span> THE DATA AT A GLANCE</p><h2>Patterns from the<br>passenger list.</h2><p>Historical records reveal different survival rates across passenger groups.</p><a href="#about" class="text-link">How this works <span>→</span></a></div>
-      <article class="insight-card"><div class="insight-top"><span class="insight-number">01</span><span class="insight-icon">◈</span></div><h3>Ticket class</h3><p>Survival rate by passenger class</p><div id="class-chart" class="bar-chart" aria-label="Survival rate by ticket class"></div></article>
-      <article class="insight-card"><div class="insight-top"><span class="insight-number">02</span><span class="insight-icon">◉</span></div><h3>Passenger sex</h3><p>Survival rate in historical records</p><div id="sex-chart" class="bar-chart" aria-label="Survival rate by passenger sex"></div></article>
-      <article class="insight-card age-card"><div class="insight-top"><span class="insight-number">03</span><span class="insight-icon">⌁</span></div><h3>Age groups</h3><p>Survival rate across age ranges</p><div id="age-chart" class="age-chart" aria-label="Survival rate by age group"></div></article>
-    </section>
+<main>
+<section class="s" id="hero" data-i="1">
+<div class="g hero-copy"><div class="eyebrow ld1">Titanic Survival Prediction · Machine Learning Project</div><h1 class="ld2">Passenger records.<br><em>Survival patterns.</em></h1><p class="lede ld3">Explore historical passenger data, then enter six details to see the model’s estimated survival probability. This is a learning demo, not a guarantee about any person.</p><div class="btns ld4"><a class="btn solid" href="#predict">Try a prediction</a><a class="btn ghost glass" href="#data">Explore the data <span class="ar">↗</span></a></div></div>
+<div class="g card glass ld4"><div class="top"><div><div class="lbl">Featured dataset</div><h3>RMS Titanic</h3></div><div class="big">1912</div></div><div class="track"><i></i></div><div class="lbl">Passenger survival records · machine learning demo</div><hr><div class="stats"><div><b id="hero-passengers">891</b><span>Records</span></div><div><b id="hero-features">6</b><span>Inputs</span></div><div><b>80/20</b><span>Split</span></div><div><b title="Accuracy on the held-out validation records">79.9%</b><span>Val. accuracy</span></div></div></div>
+<div class="g cue">SCROLL TO EXPLORE <i></i></div>
+</section>
+<section class="s" id="onboard" data-i="2"><div class="g glide rv"><h2>One dataset.<br><em>Different passenger groups.</em></h2><p>These percentages come from the included CSV. They describe recorded patterns; they do not explain what caused an individual outcome.</p><a class="lnk" href="#data">VIEW THE DATA ANALYSIS →</a></div><div class="cards">
+<a class="pc c1 inl" href="#data"><img src="/static/images/first-class-lounge.png" alt="Illustrated first-class lounge aboard an early 20th-century ocean liner"><h3>First class</h3><span class="ci glass">↗</span><div class="pc-rate"><b id="class-rate-1">—</b><span>recorded survival rate</span></div></a>
+<a class="pc c2 inl2" href="#data"><img src="/static/images/second-class-lounge.png" alt="Illustrated second-class lounge aboard an early 20th-century ocean liner"><h3>Second class</h3><span class="ci glass">↗</span><div class="pc-rate"><b id="class-rate-2">—</b><span>recorded survival rate</span></div></a>
+<a class="pc c3 inr" href="#data"><img src="/static/images/third-class-dining.png" alt="Illustrated third-class dining room aboard an early 20th-century ocean liner"><h3>Third class</h3><span class="ci glass">↗</span><div class="pc-rate"><b id="class-rate-3">—</b><span>recorded survival rate</span></div></a>
+<a class="pc c4 inr2" href="#data"><img src="/static/images/passenger-manifest.png" alt="Illustrated passenger manifest and archival ledger"><h3>Passenger records</h3><span class="ci glass">↗</span><div class="pc-rate"><b id="passenger-record-count">891</b><span>records in this dataset</span></div></a>
+</div></section>
+<section class="s" id="voyage" data-i="3"><div class="g v-l"><div class="line"></div><h2 class="h rv">A historical dataset, and the <em>patterns</em> inside it.</h2></div><div class="g v-r rv2"><p>The RMS Titanic left Southampton in April 1912 and sank after striking an iceberg. This project studies recorded passenger outcomes; it cannot establish why any individual survived.</p><a class="lnk" href="#about">HOW THIS PROJECT WORKS →</a></div></section>
+<section class="s" id="factors" data-i="4"><div class="g d-t rv"><div class="eyebrow">Six inputs used by the model</div><h2>Passenger details.<br><em>One estimate.</em></h2></div><div class="g tiles">
+<div class="tile glass rv"><div class="r">01 <span>CLASS</span></div><h3>Ticket class</h3><p>Recorded class: 1st, 2nd, or 3rd.</p></div><div class="tile glass rv2"><div class="r">02 <span>SEX</span></div><h3>Recorded sex</h3><p>Female or male, as stored in the dataset.</p></div><div class="tile glass rv3"><div class="r">03 <span>AGE</span></div><h3>Age</h3><p>Passenger age in years.</p></div><div class="tile glass rv"><div class="r">04 <span>FAMILY</span></div><h3>Family size</h3><p>Passenger plus family members aboard.</p></div><div class="tile glass rv2"><div class="r">05 <span>FARE</span></div><h3>Ticket fare</h3><p>Fare value recorded in the CSV.</p></div><div class="tile glass rv3"><div class="r">06 <span>PORT</span></div><h3>Embarkation</h3><p>Southampton, Cherbourg, or Queenstown.</p></div>
+</div></section>
 
-    <section class="stats-strip" aria-label="Dataset summary">
-      <div><span class="stat-icon">♧</span><p><strong id="passenger-count">891</strong><small>passenger records</small></p></div>
-      <div><span class="stat-icon">◌</span><p><strong id="survival-rate">38.4%</strong><small>survived in this dataset</small></p></div>
-      <div><span class="stat-icon">⌕</span><p><strong>6</strong><small>model input features</small></p></div>
-      <div><span class="stat-icon">✳</span><p><strong>189</strong><small>age values missing</small></p></div>
-    </section>
+<section class="panel" id="predict" data-i="5"><div class="cols"><div class="rv"><div class="badge"><i></i>Live model demo</div><blockquote>Enter a profile.<br><em>Explore the estimate.</em></blockquote><p class="t">The model uses six passenger details and patterns learned from the included historical data.</p><div class="prediction-result glass" id="prediction-result" aria-live="polite"><div class="lbl">MODEL ESTIMATE</div><div class="estimate-display"><div class="result-gauge" id="result-gauge" role="img" aria-label="Estimated survival probability"><div class="gauge-center"><strong id="score">—%</strong><span>estimated chance</span></div></div><div class="result-summary"><div class="result-outcome" id="outcome">Run a prediction</div><p id="result-note">Your estimate will appear here. It is not a guarantee.</p><a class="history-reference" href="https://theirishcornerinenglish.wordpress.com/2019/02/27/the-titanic/" target="_blank" rel="noopener noreferrer">Read Titanic background <span>↗</span></a><small class="reference-caption">Historical context only · not used to calculate this estimate</small></div></div><figure class="prediction-gif-card"><img src="https://theirishcornerinenglish.wordpress.com/wp-content/uploads/2019/02/titantic-2gif.gif" alt="Animated Titanic scene from the movie Titanic"><figcaption>Illustrative Titanic scene · <a href="https://theirishcornerinenglish.wordpress.com/2019/02/27/the-titanic/" target="_blank" rel="noopener noreferrer">image source</a></figcaption></figure></div></div>
+<form id="predict-form" class="rv2"><h4>PASSENGER PROFILE</h4><div class="fg">
+<label>Ticket class<select name="pclass"><option value="1">First class</option><option value="2">Second class</option><option value="3">Third class</option></select></label><label>Sex<select name="sex"><option value="female">Female</option><option value="male">Male</option></select></label>
+<label>Age<input name="age" type="number" inputmode="numeric" min="0" max="100" value="28" required></label><label>Family size<input name="family_size" type="number" min="1" max="20" value="2" required></label>
+<label>Fare paid<input name="fare" type="number" inputmode="decimal" min="0" max="600" step="0.01" value="72" required></label><label>Embarkation port<select name="embarked"><option value="S">Southampton</option><option value="C">Cherbourg</option><option value="Q">Queenstown</option></select></label></div>
+<div class="row"><p class="small">The model estimate uses historical patterns only.</p><button class="pill" type="submit"><span class="button-label">Run prediction</span> →</button></div><p class="status" id="form-message" role="status" aria-live="polite"></p></form></div></section>
 
-    <section class="about-section" id="about"><div><p class="eyebrow"><span></span> ABOUT THE PROJECT</p><h2>A small model,<br>a piece of history.</h2></div><div class="about-copy"><p>This interactive demo uses the Titanic passenger dataset to practice a supervised machine learning workflow. A Logistic Regression model learns patterns in ticket class, sex, age, family size, fare, and embarkation town.</p><p>Missing numeric values are filled with the training data median, missing categories with the most common value, and categories are encoded before prediction. The result is an estimate from historical patterns, not a certainty.</p><div class="tech-chips"><span>Python</span><span>scikit-learn</span><span>FastAPI</span><span>Historical dataset</span></div></div></section>
-  </main>
-  <footer><a class="footer-brand" href="#top">TITANIC <span>PASSENGER OUTCOME LAB</span></a><span>A learning project exploring historical passenger data.</span><a href="#top">Back to top ↑</a></footer>
+<div class="integrated-content" aria-label="Dataset analysis and project information">
+<section class="integrated-section" id="data" data-i="6">
+  <div class="detail-hero"><div><p class="eyebrow">THE PASSENGER MANIFEST · DATA ANALYSIS</p><h1>Explore the data<br><em>behind the story.</em></h1><p>Compare passenger groups, see the overall survival percentage, and learn where information is missing. This analysis uses the project's CSV dataset.</p></div></div>
+  <div class="detail-kpis" aria-label="Dataset summary">
+    <article class="detail-kpi"><span>PASSENGER RECORDS</span><strong id="explore-total">—</strong></article>
+    <article class="detail-kpi"><span>SURVIVED</span><strong id="explore-survived">—</strong><span id="explore-survival-copy">of all passengers</span></article>
+    <article class="detail-kpi survival-kpi"><span>OVERALL SURVIVAL RATE</span><strong id="explore-rate">—%</strong><div class="rate-track" id="explore-rate-meter" role="meter" aria-label="Overall survival rate" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="explore-rate-bar"></i></div></article>
+    <article class="detail-kpi"><span>DID NOT SURVIVE</span><strong id="explore-not-survived">—</strong></article>
+    <article class="detail-kpi"><span>AGE NOT RECORDED</span><strong id="explore-missing">—</strong><span>records with missing age</span></article>
+  </div>
+  <section class="detail-section detail-panel"><p class="eyebrow">COMPARE PASSENGER GROUPS</p><h2 id="chart-title">Survival rate by ticket class</h2><p class="detail-lede" id="chart-description">Share of passengers in each group who survived.</p>
+    <div class="chart-controls"><label>Group by<select id="dimension"><option value="class">Ticket class</option><option value="sex">Sex</option><option value="age">Age group</option><option value="embarked">Embarkation town</option><option value="family">Family size</option></select></label><label>Show<select id="measure"><option value="rate">Survival rate (%)</option><option value="passengers">Passenger count</option><option value="survived">Survived count</option><option value="not_survived">Did not survive count</option></select></label><p class="chart-insight" id="chart-insight" aria-live="polite"></p></div>
+    <div class="visualization"><div class="axis-labels" id="axis-labels"></div><div class="plot-area" id="explore-chart" role="img" aria-label="Interactive chart of passenger groups"><p class="loading-state">Loading passenger records…</p></div></div><p class="chart-footnote">Survival rate is the share of passengers marked survived in a group. This summarizes the historical records and does not establish cause.</p>
+  </section>
+  <section class="detail-section detail-panel"><p class="eyebrow">GROUP SUMMARY</p><h2 id="table-title">Passenger counts by ticket class</h2><p class="detail-lede">Choose another group or measure above to update this chart and table.</p><div class="detail-table-wrap"><table class="detail-table"><thead><tr><th>Group</th><th>Passengers</th><th>Survived</th><th>Did not survive</th><th>Survival rate</th></tr></thead><tbody id="group-table"><tr><td colspan="5">Loading…</td></tr></tbody></table></div></section>
+</section>
+
+<section class="integrated-section" id="data-quality">
+  <div class="missing-layout"><div><p class="eyebrow">DATA QUALITY</p><h2>Some details are missing.</h2><p class="detail-lede">A model needs a plan for incomplete records. Age is the main field with gaps in this dataset. During model training, missing numeric values are filled using the training median.</p><div class="detail-kpi" style="margin-top:20px"><span>PASSENGERS WITHOUT AGE</span><strong id="age-missing-share">—</strong></div></div><div class="detail-panel"><p class="eyebrow">MISSING VALUES BY FIELD</p><div id="missing-bars"><p class="loading-state">Loading missing-value summary…</p></div></div></div>
+  <div class="detail-section"><p class="eyebrow">FIELD GUIDE</p><h2>What does each column mean?</h2><p class="detail-lede">The model uses six selected inputs. Other fields describe the data but may duplicate the answer or add little useful information.</p><label class="integrated-search">Search fields<input id="field-search" type="search" placeholder="Try age, fare, class…"></label><div class="dictionary-grid" id="dictionary-grid">
+    <article class="dictionary-item" data-search="survived target outcome label"><span class="field-type">TARGET</span><h3>survived</h3><p>Outcome: 1 means survived; 0 means did not survive.</p></article>
+    <article class="dictionary-item" data-search="pclass passenger class ticket"><span class="field-type used-type">MODEL INPUT</span><h3>pclass</h3><p>Ticket class: first, second, or third.</p></article>
+    <article class="dictionary-item" data-search="sex male female"><span class="field-type used-type">MODEL INPUT</span><h3>sex</h3><p>Passenger sex category recorded in the data.</p></article>
+    <article class="dictionary-item" data-search="age years missing"><span class="field-type used-type">MODEL INPUT</span><h3>age</h3><p>Passenger age in years; some records have no age.</p></article>
+    <article class="dictionary-item" data-search="sibsp parch family size"><span class="field-type used-type">DERIVED INPUT</span><h3>family_size</h3><p>Siblings/spouses and parents/children, plus the passenger.</p></article>
+    <article class="dictionary-item" data-search="fare ticket price"><span class="field-type used-type">MODEL INPUT</span><h3>fare</h3><p>The recorded ticket fare.</p></article>
+    <article class="dictionary-item" data-search="embarked port town southampton cherbourg queenstown"><span class="field-type used-type">MODEL INPUT</span><h3>embarked</h3><p>Boarding port: Southampton, Cherbourg, or Queenstown.</p></article>
+    <article class="dictionary-item" data-search="alive yes no leakage duplicate target"><span class="field-type exclude-type">EXCLUDED</span><h3>alive</h3><p>A text duplicate of the answer, so it would reveal the target.</p></article>
+    <article class="dictionary-item" data-search="class duplicate pclass deck cabin"><span class="field-type exclude-type">NOT USED</span><h3>class · deck · cabin</h3><p>Duplicate or highly incomplete fields left out of this simple model.</p></article>
+  </div><p id="no-fields" class="empty-state" hidden>No fields match that search.</p></div>
+</section>
+
+<section class="integrated-section" id="about" data-i="7">
+  <div class="detail-hero"><div><p class="eyebrow">THE PROJECT · HOW IT WORKS</p><h1>From passenger data<br>to a <em>careful estimate.</em></h1><p>This college machine-learning project explores Titanic passenger records and turns the workflow into a clear, interactive learning demo.</p></div></div>
+  <div class="detail-section"><p class="eyebrow">PROJECT OVERVIEW</p><h2>One page. The complete project.</h2><p class="detail-lede">Start with the passenger dataset, prepare useful fields, train a model, and connect it to the prediction form below. The goal is to make every step understandable.</p><div class="image-gallery">
+    <article class="image-card"><img src="/static/images/first-class-lounge.png" alt="Illustrative first-class lounge"><div><h3>Passenger groups</h3><p>Compare patterns by ticket class and other recorded details.</p></div></article><article class="image-card"><img src="/static/images/third-class-dining.png" alt="Illustrative third-class dining room"><div><h3>Historical records</h3><p>Use the included passenger CSV for analysis and model training.</p></div></article><article class="image-card"><img src="/static/images/passenger-manifest.png" alt="Illustrative passenger manifest ledger"><div><h3>Learning demo</h3><p>See how recorded details become a model estimate.</p></div></article>
+  </div><p class="chart-footnote">Generated illustrative artwork, not archival Titanic photographs.</p></div>
+  <div class="detail-section"><p class="eyebrow">MACHINE-LEARNING FLOW</p><h2>How a prediction is made.</h2><p class="detail-lede">The website uses the saved preprocessing and model pipeline when a new example profile is submitted.</p><div class="flow-grid">
+    <article class="flow-step"><b>STEP 01</b><h3>Load the data</h3><p>Read the passenger CSV and inspect its fields and outcome.</p></article><article class="flow-step"><b>STEP 02</b><h3>Prepare inputs</h3><p>Fill missing values, encode categories, and derive family size.</p></article><article class="flow-step"><b>STEP 03</b><h3>Train the model</h3><p>A Random Forest learns patterns from training examples.</p></article><article class="flow-step"><b>STEP 04</b><h3>Show an estimate</h3><p>The API returns a predicted class and probability to this page.</p></article>
+  </div></div>
+  <div class="detail-section detail-panel"><p class="eyebrow">TOOLS AND TECHNOLOGY</p><h2>What the project uses.</h2><div class="tech-grid">
+    <article class="tech-item"><strong>Python + pandas</strong><p>Load, inspect, and prepare passenger records.</p></article><article class="tech-item"><strong>scikit-learn</strong><p>Preprocess features and train the Random Forest model.</p></article><article class="tech-item"><strong>FastAPI</strong><p>Connect the model to the website's prediction form.</p></article><article class="tech-item"><strong>HTML, CSS, JavaScript</strong><p>Build the responsive page, charts, and interactions.</p></article><article class="tech-item"><strong>Jupyter Notebook</strong><p>Document EDA, feature engineering, and model training.</p></article><article class="tech-item"><strong>Joblib</strong><p>Save and load the trained model pipeline.</p></article>
+  </div></div>
+  <div class="detail-section detail-panel"><p class="eyebrow">PROJECT LIMITS</p><h2>A probability is an estimate.</h2><p class="detail-lede">It reflects patterns learned from limited historical records and the fields entered. It is not a guarantee or an explanation of any individual's outcome. This is an educational demo, not a tool for real-world decisions.</p></div>
+  
+</section>
+</div>
+
+
+</main><footer><div class="fgrid"><div><div class="fb">TITANIC · 1912</div><p>A student machine learning project using historical passenger records.</p></div><div><h5>EXPLORE</h5><ul><li><a href="#data">Interactive data</a></li><li><a href="#factors">Model inputs</a></li><li><a href="#predict">Prediction demo</a></li></ul></div><div><h5>PROJECT</h5><ul><li><a href="#about">Method and limits</a></li><li><a href="#data">Dataset details</a></li></ul></div><div><h5>NOTE</h5><ul><li>Historical estimate</li><li>Not a guarantee</li></ul></div></div><div class="word" aria-hidden="true">TITANIC</div><div class="legal"><div>Educational project · Results describe dataset patterns only.</div><span><a href="#about">About</a><a href="#data">Explore data</a></span></div></footer>
+<section class="signature-end" id="credits" aria-label="Project creator"><div class="signature-rule" aria-hidden="true"></div><p class="signature-kicker">Made By</p><h2><span>Gurmeet Singh</span></h2><p class="signature-caption">TITANIC SURVIVAL PREDICTION · STUDENT PROJECT</p><div class="signature-rule signature-rule-bottom" aria-hidden="true"></div></section>
+<script>
+if (!CSS.supports('animation-timeline: view()')) {
+  document.documentElement.classList.add('no-sda');
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: .2 });
+  document.querySelectorAll('.rv,.rv2,.rv3,.inl,.inl2,.inr,.inr2,.line').forEach(el => io.observe(el));
+}
+
+const links = document.querySelectorAll('.idx a');
+const so = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) links.forEach(a => a.classList.toggle('on', a.dataset.n === e.target.dataset.i));
+}), { threshold: .5 });
+document.querySelectorAll('[data-i]').forEach(s => so.observe(s));
+
+const signature = document.querySelector('.signature-end');
+if (signature && 'IntersectionObserver' in window) {
+  const signatureObserver = new IntersectionObserver(entries => {
+    if (entries.some(entry => entry.isIntersecting)) {
+      signature.classList.add('is-visible');
+      signatureObserver.disconnect();
+    }
+  }, { threshold: 0.35 });
+  signatureObserver.observe(signature);
+} else if (signature) {
+  signature.classList.add('is-visible');
+}
+if (signature && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  signature.addEventListener('pointermove', event => {
+    if (event.pointerType === 'touch') return;
+    signature.classList.add('is-pointer-active');
+    const rect = signature.getBoundingClientRect();
+    const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+    const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+    signature.style.setProperty('--spot-x', `${(x * 100).toFixed(1)}%`);
+    signature.style.setProperty('--spot-y', `${(y * 100).toFixed(1)}%`);
+    signature.style.setProperty('--tilt-x', `${((x - 0.5) * 10).toFixed(2)}deg`);
+    signature.style.setProperty('--tilt-y', `${((0.5 - y) * 6).toFixed(2)}deg`);
+  }, { passive: true });
+  signature.addEventListener('pointerleave', () => {
+    signature.classList.remove('is-pointer-active');
+    signature.style.setProperty('--spot-x', '50%');
+    signature.style.setProperty('--spot-y', '45%');
+    signature.style.setProperty('--tilt-x', '0deg');
+    signature.style.setProperty('--tilt-y', '0deg');
+  }, { passive: true });
+}
+
+let blurFrame = 0;
+function softenBackgroundOnScroll() {
+  if (blurFrame) return;
+  blurFrame = requestAnimationFrame(() => {
+    blurFrame = 0;
+    const blur = Math.min(7, window.scrollY / 100);
+    document.documentElement.style.setProperty('--scroll-blur', `${blur.toFixed(1)}px`);
+  });
+}
+window.addEventListener('scroll', softenBackgroundOnScroll, { passive: true });
+softenBackgroundOnScroll();
+
+</script>
+  <script src="/static/explore.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>

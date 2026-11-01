@@ -73,6 +73,10 @@ async function initExplorer() {
     document.getElementById('explore-not-survived').textContent = datasetStats.not_survived.toLocaleString();
     document.getElementById('explore-missing').textContent = datasetStats.missing_age.toLocaleString();
     document.getElementById('explore-survival-copy').textContent = `${datasetStats.survival_rate}% of all passengers`;
+    document.getElementById('explore-rate').textContent = `${datasetStats.survival_rate}%`;
+    const survivalRate = Math.max(0, Math.min(100, Number(datasetStats.survival_rate) || 0));
+    document.getElementById('explore-rate-bar').style.width = `${survivalRate}%`;
+    document.getElementById('explore-rate-meter').setAttribute('aria-valuenow', survivalRate);
     renderMissingValues(datasetStats.missing_values, datasetStats.passengers);
     updateChart();
   } catch (error) {
